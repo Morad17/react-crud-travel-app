@@ -3,6 +3,8 @@ import {Outlet, createBrowserRouter, Routes, Route, RouterProvider} from 'react-
 import './App.css';
 import Home from './pages/Home'
 import Navbar from './components/Navbar'
+import Register from './pages/Register'
+import Login from './pages/Login'
 
 function App() {
 
@@ -24,6 +26,12 @@ const router = createBrowserRouter([
       path:"/",
       element: <Home />,
 
+    },{
+      path: "/register",
+      element: <Register />
+    },{
+      path: "/login",
+      element: <Login />
     }
   ]
   }
