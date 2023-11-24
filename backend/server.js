@@ -25,8 +25,8 @@ app.get("/trips", (req,res) => {
 
 // Insert new trip //
 app.post("/new-trip",(req,res) => {
-    const q = "INSERT INTO holidaytrips ('palce-name', 'date-to-visit', 'how-long', 'activities', 'google-maps-link')"
-    const val = ["bali","2023-10-23","surfing,rafting,snorkeling,fire show", "https://jasnjda"]
+    const q = "INSERT INTO holidaytrips (`place-name`,`date-to-visit`,`how-long`,`activities`,`google-maps-link`) VALUES (?)"
+    const val = ["bali","2023-10-23","5","surfing,rafting,snorkeling,fire show", "https://jasnjda"]
     db.query(q, [val],(err,data) => {
         if(err) return res.json(err)
         return res.json(data)
