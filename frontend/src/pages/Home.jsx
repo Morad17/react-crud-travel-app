@@ -1,5 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
+import TripCard from '../components/TripCard'
+
+import { Link } from 'react-router-dom'
 
 const Home = () => {
   const [trips, setTrips ] = useState([])
@@ -21,17 +24,20 @@ const Home = () => {
   
   
   return (
-    <div>
-      <h1>All books</h1>
-      <div className="">
+    <div className="home">
+      <h1>All Trips</h1>
+      <div className="all-trips">
          {
           trips? (trips.map((trip, key) => {
-            return <p key={key}>{trip.place_name}</p>
+            return <TripCard trip={trip} key={key} />
           })) : <p>Loading</p>
          }
          
          {console.log(trips)}
       </div>
+      <button className="add-trip">
+        <Link to="/add">Add Trip</Link> 
+      </button>
     </div>
   )
 }

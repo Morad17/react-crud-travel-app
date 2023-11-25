@@ -5,6 +5,7 @@ import Home from './pages/Home'
 import Navbar from './components/Navbar'
 import Register from './pages/Register'
 import Login from './pages/Login'
+import AddTrip from './pages/AddTrip';
 
 function App() {
 
@@ -26,12 +27,18 @@ const router = createBrowserRouter([
       path:"/",
       element: <Home />,
 
-    },{
+    },
+    {
       path: "/register",
       element: <Register />
-    },{
+    },
+    {
       path: "/login",
       element: <Login />
+    },
+    {
+      path:"/add",
+      element: <AddTrip />
     }
   ]
   }

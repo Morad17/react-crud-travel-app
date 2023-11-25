@@ -1,0 +1,21 @@
+.trip-card{
+    width: 23vw;
+    background-color: rgb(53 121 82 / 56%);
+    border-radius: 13px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+    .card-image{
+        margin: 0 auto;
+        width: 90%;
+        padding-top: 2vh;
+        display: flex;
+    }
+    .card-details{
+        font-size: 20px;
+        display: flex;
+        justify-content: space-around;
+    }
+    .card-headings{
+        font-weight: bold;
+    }
+}
