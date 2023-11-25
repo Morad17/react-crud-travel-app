@@ -1,6 +1,7 @@
 import express from "express";
 import mysql from "mysql"
 import dotenv from "dotenv"
+import cors from 'cors'
 
 dotenv.config()
 
@@ -13,6 +14,8 @@ const db = mysql.createConnection({
     database: process.env.MYSQL_DATABASE,
 })
 
+app.use(express.json())
+app.use(cors())
 
 // Get All Queries //
 app.get("/trips", (req,res) => {
@@ -25,11 +28,16 @@ app.get("/trips", (req,res) => {
 
 // Insert new trip //
 app.post("/new-trip",(req,res) => {
-    const q = "INSERT INTO holidaytrips (`place-name`,`date-to-visit`,`how-long`,`activities`,`google-maps-link`) VALUES (?)"
-    const val = ["bali","2023-10-23","5","surfing,rafting,snorkeling,fire show", "https://jasnjda"]
+    const q = "INSERT INTO holidaytrips (`place_name`,`date_to_visit`,`how_long`,`activities`,`google_maps_link`) VALUES (?)"
+    const val = [
+        req.body.place_name,
+        req.body.date_to_visit,
+        req.body.how_long,
+        req.body.activities, 
+        req.body.google_maps_link]
     db.query(q, [val],(err,data) => {
         if(err) return res.json(err)
-        return res.json(data)
+        return res.json("success")
     })
 })
 
