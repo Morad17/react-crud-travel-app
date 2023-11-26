@@ -6,6 +6,7 @@ import Navbar from './components/Navbar'
 import Register from './pages/Register'
 import Login from './pages/Login'
 import AddTrip from './pages/AddTrip';
+import UpdateTrip from './pages/UpdateTrip';
 
 function App() {
 
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
     {
       path:"/add",
       element: <AddTrip />
+    },
+    {
+      path:"/update/:id",
+      element: <UpdateTrip />
     }
   ]
   }

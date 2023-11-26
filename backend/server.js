@@ -41,6 +41,34 @@ app.post("/new-trip",(req,res) => {
     })
 })
 
+// Delete Trip
+app.delete("/trips/:id", (req,res)=> {
+    const tripId = req.params.id
+    const q = "DELETE FROM holidaytrips WHERE id = ?"
+
+    db.query(q, [tripId], (err,data)=>{
+        if (err) return res.json(err)
+        return res.json("Trip has been successfully deleted")
+    })
+})
+
+//Update Trip
+app.put("/trips/:id", (req,res)=> {
+    const tripId = req.params.id
+    const q = "UPDATE holidaytrips SET `place_name` = ?,`date_to_visit`= ?,`how_long = ?`,`activities` = ?,`google_maps_link` = ? WHERE id = ?"
+    const values =[
+        req.body.place_name,
+        req.body.date_to_visit,
+        req.body.how_long,
+        req.body.activities, 
+        req.body.google_maps_link]
+
+    db.query(q, [...values,tripId], (err,data)=>{
+        if (err) return res.json(err)
+        return res.json("Trip has been successfully updated")
+    })
+})
+
 app.listen(8000, () => {
     console.log("connected to backend");
 })

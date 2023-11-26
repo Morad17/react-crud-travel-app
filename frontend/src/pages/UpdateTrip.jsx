@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router'
 import axios from 'axios'
+import React, {useState} from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 
-const AddTrip = () => {
+const UpdateTrip = (id) => {
+
     const [trip, setTrip] = useState({
         place:"",
         date:null,
@@ -12,6 +13,10 @@ const AddTrip = () => {
     })
 
     const navigate = useNavigate()
+    const location = useLocation()
+
+    const tripId = location.pathname.split("/")[2]
+
     const handleChange = (e) => {
         setTrip(prev=>({...prev, [e.target.name]:e.target.value }))
         
@@ -20,7 +25,7 @@ const AddTrip = () => {
         e.preventDefault()
         try{
             console.log(typeof(trip.length))
-            await axios.post("http://localhost:8000/new-trip",trip)
+            await axios.put("http://localhost:8000/new-trip/"+ tripId,trip)
             console.log(trip+"sent");
             navigate("/")
             
@@ -29,7 +34,10 @@ const AddTrip = () => {
         }
     }
   return (
-    <div className="add-form">
+    <div>
+        <h1>Update My Trip</h1>
+        <div className="trip-update-card">
+        <div className="add-form">
         <h1>Add A New Trip</h1>
         <input type="text" placeholder="Place Name" onChange={handleChange} name="place"/>
         <input type="date" placeholder="Date Visited (year/month/day)" onChange={handleChange} name="date"/>
@@ -37,8 +45,10 @@ const AddTrip = () => {
         <input type="text" placeholder="Activities" onChange={handleChange} name="activities"/>
         <input type="text" placeholder="Google Maps Link" onChange={handleChange} name="location"/>
         <button className="add-trip-button" onClick={handleSubmit}>Submit</button>
+        </div>
+        </div>
     </div>
   )
 }
 
-export default AddTrip
+export default UpdateTrip

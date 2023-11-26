@@ -1,9 +1,21 @@
 import React from 'react'
 import tripCardStock from '../assets/images/trip-card-stock.jpg'
+import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 const TripCard = (
-    {trip: {place_name,date_to_visit,how_long,activities,google_maps_link}}, key
+    {trip: {id,place_name,date_to_visit,how_long,activities,google_maps_link}}, key
 ) => {
+
+  const handleDelete = async (id) => {
+    try{
+      await axios.delete("http://localhost:8000/trips/"+id)
+      window.location.reload()
+    } catch(err) {
+      console.log(err);
+    }
+  }
+ 
   return (
     <div className="trip-card" key={key}>
         <div className="card-block-image">
@@ -24,6 +36,10 @@ const TripCard = (
                 <p className="card-activities">{activities}</p>
                 <p className="card-location">{google_maps_link}</p>
             </span>
+        </div>
+        <div className="card-buttons">
+          <button className="update-button"><Link to={`/update/${id}`}>Update</Link></button>
+          <button className="delete-button" onClick={()=>handleDelete(id)}>Delete</button>
         </div>
     </div>
   )
