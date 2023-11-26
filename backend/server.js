@@ -26,7 +26,7 @@ app.get("/trips", (req,res) => {
     })
 })
 
-// Insert new trip //
+// Add new trip //
 app.post("/new-trip",(req,res) => {
     const q = "INSERT INTO holidaytrips (`place_name`,`date_to_visit`,`how_long`,`activities`,`google_maps_link`) VALUES (?)"
     const val = [

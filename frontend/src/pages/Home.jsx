@@ -14,7 +14,6 @@ const Home = () => {
       try {
         const res = await axios.get("http://localhost:8000/trips")
         setTrips(res.data)
-        console.log(trips);
       } catch(err) {
         console.log(err);
       }
@@ -33,7 +32,7 @@ const Home = () => {
           })) : <p>Loading</p>
          }
          
-         {console.log(trips)}
+
       </div>
       <button className="add-trip">
         <Link to="/add">Add Trip</Link> 

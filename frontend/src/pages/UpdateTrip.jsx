@@ -6,7 +6,7 @@ const UpdateTrip = (id) => {
 
     const [trip, setTrip] = useState({
         place:"",
-        date:null,
+        date: null,
         length:null,
         activities:"",
         location:""
@@ -25,7 +25,7 @@ const UpdateTrip = (id) => {
         e.preventDefault()
         try{
             console.log(typeof(trip.length))
-            await axios.put("http://localhost:8000/new-trip/"+ tripId,trip)
+            await axios.put("http://localhost:8000/trips/"+ tripId,trip)
             console.log(trip+"sent");
             navigate("/")
             
