@@ -36,17 +36,17 @@ const UpdateTrip = (id) => {
     }
   return (
     <div>
-        <h1>Update My Trip</h1>
+        
         <div className="trip-update-card">
-        <div className="add-form">
-        <h1>Add A New Trip</h1>
-        <input type="text" placeholder="Place Name" onChange={handleChange} name="place_name"/>
-        <input type="date" placeholder="Date Visited (year/month/day)" onChange={handleChange} name="date_to_visit"/>
-        <input type="number" placeholder="Length Of Stay (days)" onChange={handleChange} name="how_long"/>
-        <input type="text" placeholder="Activities" onChange={handleChange} name="activities"/>
-        <input type="text" placeholder="Google Maps Link" onChange={handleChange} name="google_maps_link"/>
-        <button className="add-trip-button" onClick={handleSubmit}>Submit</button>
-        </div>
+            <div className="add-form">
+                <h1>Update My Trip</h1>
+                <input type="text" placeholder="Place Name" onChange={handleChange} name="place_name"/>
+                <input type="date" placeholder="Date Visited (year/month/day)" onChange={handleChange} name="date_to_visit"/>
+                <input type="number" placeholder="Length Of Stay (days)" onChange={handleChange} name="how_long"/>
+                <input type="text" placeholder="Activities" onChange={handleChange} name="activities"/>
+                <input type="text" placeholder="Google Maps Link" onChange={handleChange} name="google_maps_link"/>
+                <button className="add-trip-button" onClick={handleSubmit}>Submit</button>
+            </div>
         </div>
     </div>
   )

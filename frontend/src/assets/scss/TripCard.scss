@@ -18,4 +18,19 @@
     .card-headings{
         font-weight: bold;
     }
+    .update-button, .delete-button{
+        font-size: 1.2rem;
+        background-color: #139d13;
+        color: white;
+        border-radius: 50px;
+        text-decoration: none;
+        padding: 0.5vh .6vw;
+        a{
+            text-decoration: none;
+            color: white;
+        }
+    }
+    .delete-button{
+        background-color: #c73f3f;
+    }
 }

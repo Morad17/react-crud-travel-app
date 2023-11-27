@@ -1,0 +1,37 @@
+.add-form{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+
+    h1{
+        font-size: 3.3rem;
+    }
+
+    input{
+        width: 35%;
+        height: 25%;
+        margin: 3vh;
+        padding: 1vh 0;
+        font-size: 1.75rem;
+        color: white;
+        background-color: rgba(53, 121, 82, 0.56) ;
+    }
+    input:hover{
+        text-decoration: none;
+        outline: none;
+    }
+    input::placeholder{
+        color: #cdcdcd;
+        opacity: 1;
+    }
+    .add-trip-button{
+        font-size: 2rem;
+        background-color: #ea9635d9;
+        color: white;
+        border-radius: 50px;
+        width: 10vw;
+        padding: .5vw .25vh;
+    }
+}
