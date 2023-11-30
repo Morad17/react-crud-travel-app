@@ -30,11 +30,34 @@ const AddTrip = () => {
   return (
     <div className="add-form">
         <h1>Add A New Trip</h1>
-        <input type="text" placeholder="Place Name" onChange={handleChange} name="place_name"/>
-        <input type="date" placeholder="Date Visited (year/month/day)" onChange={handleChange} name="date_to_visit"/>
-        <input type="number" placeholder="Length Of Stay (days)" onChange={handleChange} name="how_long"/>
-        <input type="text" placeholder="Activities" onChange={handleChange} name="activities"/>
-        <input type="text" placeholder="Google Maps Link" onChange={handleChange} name="google_maps_link"/>
+            <div className="input-field">
+                <div className="field">
+                    <label htmlFor="">Name Of Place</label>
+                    <input type="text" placeholder="" onChange={handleChange} name="place_name"/>
+                </div>
+                <div className="field">
+                    <label htmlFor="">Date Of Visit</label>
+                    <input type="date" placeholder="Date Visited (year/month/day)" onChange={handleChange} name="date_to_visit"/>
+                </div>
+                <div className="field number-field">
+                    <div className="number-label">
+                        <label htmlFor="">Length Of Stay (Days)</label>
+                        <div className="toggles">
+                            <button className="add-days">+</button>
+                            <button className="subtract-days">-</button>
+                        </div>
+                    </div>
+                    <input type="number" value={0} onChange={handleChange} name="how_long"/>
+                </div>
+                <div className="field">
+                    <label htmlFor="">Activities</label>
+                    <input type="text" placeholder="" onChange={handleChange} name="activities"/>
+                </div>
+                <div className="field">
+                    <label htmlFor="">Google Maps Link</label>
+                    <input type="text" placeholder="" onChange={handleChange} name="google_maps_link"/>
+                </div>
+            </div>
         <button className="add-trip-button" onClick={handleSubmit}>Submit</button>
     </div>
   )

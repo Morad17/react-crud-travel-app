@@ -1,17 +1,32 @@
 .home{
-
-    
+    h1{
+        font-size: 3rem;
+        text-align: center;
+    }
 
     .all-trips{
         display: flex;
         flex-direction: row;
         justify-content: space-around;
         margin-bottom: 20vh;
+        
     }
     .add-trip{
-        width: 10rem;
-        height: 2rem;
-        font-size: 20px;
+        
+        display: flex;
+        justify-content: center;
+    }
+    .add-trip-button{
+        font-size: 2rem;
+        background-color: #ea9635d9;
+        color: white;
+        border-radius: 50px;
+        width: 10vw;
+        padding: .5vw .25vh;
+    }
+    .add-trip-button a{
+        text-decoration: none;
+        color: white;
     }
 }
 

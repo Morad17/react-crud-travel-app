@@ -34,9 +34,12 @@ const Home = () => {
          
 
       </div>
-      <button className="add-trip">
+      <div className="add-trip">
+        <button className="add-trip-button">
         <Link to="/add">Add Trip</Link> 
       </button>
+      </div>
+      
     </div>
   )
 }
