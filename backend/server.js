@@ -52,6 +52,18 @@ app.delete("/trips/:id", (req,res)=> {
     })
 })
 
+//Get One Trip
+
+app.get("/trips/:id", (req,res) => {
+    const tripId = req.params.id
+    const q = 'SELECT * from holidaytrips WHERE id = ?'
+
+    db.query(q, [tripId],(err, data) => {
+        if (err) return res.send(err)
+        return res.json(data)
+    })
+})
+
 //Update Trip
 app.put("/trips/:id", (req,res)=> {
     const tripId = req.params.id
