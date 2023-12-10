@@ -12,6 +12,21 @@ const UpdateTrip = (id) => {
         google_maps_link:""
     })
 
+    const addDays = () => {
+        const days = trip.how_long
+        trip.how_long = days + 1     
+        setTrip({...trip})
+
+        console.log(days)
+    }
+    const subtractDays = () => {
+        const days = trip.how_long
+        if (days > 0) trip.how_long = days - 1
+        setTrip({...trip})
+
+        console.log(days);
+    }
+
     const navigate = useNavigate()
     const location = useLocation()
 
@@ -36,16 +51,36 @@ const UpdateTrip = (id) => {
     }
   return (
     <div>
-        
         <div className="trip-update-card">
             <div className="add-form">
                 <h1>Update My Trip</h1>
-                <input type="text" placeholder="Place Name" onChange={handleChange} name="place_name"/>
-                <input type="date" placeholder="Date Visited (year/month/day)" onChange={handleChange} name="date_to_visit"/>
-                <input type="number" placeholder="Length Of Stay (days)" onChange={handleChange} name="how_long"/>
-                <input type="text" placeholder="Activities" onChange={handleChange} name="activities"/>
-                <input type="text" placeholder="Google Maps Link" onChange={handleChange} name="google_maps_link"/>
-                <button className="add-trip-button" onClick={handleSubmit}>Submit</button>
+                <div className="input-field">
+                    <div className="field">
+                        <label htmlFor="">Name Of Place</label>
+                        <input type="text" placeholder="" onChange={handleChange} name="place_name"/>
+                    </div>
+                    <div className="field">
+                        <label htmlFor="">Date Of Visit</label>
+                        <input type="date" placeholder="Date Visited (year/month/day)" onChange={handleChange} name="date_to_visit"/>
+                    </div>
+                    <div className="field number-field">
+                        <label htmlFor="">Length Of Stay (Days)</label>   
+                            <div className="toggles">
+                                <button className="add-days" onClick={addDays}>+</button>
+                                <input type="number" value={trip.how_long} onChange={handleChange} name="how_long" id="how_long"/>
+                                <button className="subtract-days" onClick={subtractDays}>-</button>
+                            </div>
+                    </div>
+                    <div className="field">
+                        <label htmlFor="">Activities</label>
+                        <input type="text" placeholder="" onChange={handleChange} name="activities"/>
+                    </div>
+                    <div className="field">
+                        <label htmlFor="">Google Maps Link</label>
+                        <input type="text" placeholder="" onChange={handleChange} name="google_maps_link"/>
+                    </div>
+                </div>
+            <button className="add-trip-button" onClick={handleSubmit}>Submit</button>
             </div>
         </div>
     </div>

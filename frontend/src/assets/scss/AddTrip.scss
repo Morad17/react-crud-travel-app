@@ -19,12 +19,16 @@
     .number-label{
         display: flex;
     }
+    .number-field{
+        width: 90%;
+    }
     .toggles{
-        margin-left: 4vw;
+        display: flex;
+        flex-direction: row;
     }
     .toggles button{
         padding: 4px 20px;
-        margin-right: 10px;
+        width: 10%;
     }
     .add-days{
         background-color: #139d13;

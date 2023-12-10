@@ -6,10 +6,25 @@ const AddTrip = () => {
     const [trip, setTrip] = useState({
         place_name:"",
         date_to_visit:null,
-        how_long:null,
+        how_long:0,
         activities:"",
         google_maps_link:""
     })
+
+    const addDays = () => {
+        const days = trip.how_long
+        trip.how_long = days + 1     
+        setTrip({...trip})
+
+        console.log(days)
+    }
+    const subtractDays = () => {
+        const days = trip.how_long
+        if (days > 0) trip.how_long = days - 1
+        setTrip({...trip})
+
+        console.log(days);
+    }
 
     const navigate = useNavigate()
     const handleChange = (e) => {
@@ -40,14 +55,12 @@ const AddTrip = () => {
                     <input type="date" placeholder="Date Visited (year/month/day)" onChange={handleChange} name="date_to_visit"/>
                 </div>
                 <div className="field number-field">
-                    <div className="number-label">
-                        <label htmlFor="">Length Of Stay (Days)</label>
+                    <label htmlFor="">Length Of Stay (Days)</label>   
                         <div className="toggles">
-                            <button className="add-days">+</button>
-                            <button className="subtract-days">-</button>
+                            <button className="add-days" onClick={addDays}>+</button>
+                            <input type="number" value={trip.how_long} onChange={handleChange} name="how_long" id="how_long"/>
+                            <button className="subtract-days" onClick={subtractDays}>-</button>
                         </div>
-                    </div>
-                    <input type="number" value={0} onChange={handleChange} name="how_long"/>
                 </div>
                 <div className="field">
                     <label htmlFor="">Activities</label>
