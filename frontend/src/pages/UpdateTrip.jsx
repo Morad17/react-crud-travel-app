@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { renderToString} from 'react-dom/server'
 import React, {useState} from 'react'
 import { useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -57,60 +58,64 @@ const UpdateTrip = (id) => {
                 const res = await axios.get("http://localhost:8000/trips/"+ tripId)
                 const newData = res.data
                 setPrevTripData(newData)
-                console.log(res.data);
-                console.log(prevTripData);
             } catch(err) {
                 console.log(err);
             }
         }
         prevTrip()
     }, [])
-    
 
+    const date = () => { 
+        prevTripData.map((p, key)=>{
+            const visitDate = p.date_to_visit.slice(0,10).toString().replace(/-/g, '/')
+            document.getElementById("current-trip-date").value = visitDate
+        })
+    }
   return (
     <div className="trip-update-card">
         <h1>Update My Trip</h1>
         <div className="update-form">
-            {
-                prevTripData? (prevTripData.map((prev)=>{
-                    return <div className="current-trip-details">
-                                <div className="field">
-                                        <label htmlFor="">Current</label>
-                                        <input type="text" placeholder={prev.place_name} name="place_name"/>
-                                    </div>
-                                    <div className="field">
-                                        <label htmlFor="">Current</label>
-                                        <input type="date" placeholder={prev.date_to_visit} name="date_to_visit"/>
-                                    </div>
-                                    <div className="field number-field">
-                                        <label htmlFor="">Current</label>   
-                                            <div className="toggles">
-                                                <input type="number" value={prev.how_long} name="how_long" id="how_long"/>
-                                            </div>
-                                    </div>
-                                    <div className="field">
-                                        <label htmlFor="">Current</label>
-                                        <input type="text" placeholder={prev.activities} name="activities"/>
-                                    </div>
-                                    <div className="field">
-                                        <label htmlFor="">Current</label>
-                                        <input type="text" placeholder={prev.google_maps_link} name="google_maps_link"/>
-                                    </div>
+        {prevTripData? (prevTripData.map((prev, key)=>{
+            const visitDate = prev.date_to_visit.slice(0,10).toString().replace(/-/g, '/')
+
+        return <div className="current-trip-details" key={key}>
+                    <div className="field">
+                        <label >Current</label>
+                        <input type="text" placeholder={prev.place_name} name="place_name" readOnly/>
+                    </div>
+                    <div className="field">
+                        <label >Current</label>
+                        <input type="string"  value={visitDate} id="current-trip-date" readOnly/>
+
+                    </div>
+                    <div className="field number-field">
+                        <label >Current</label>   
+                            <div className="toggles">
+                                <input type="number" value={prev.how_long} name="how_long" readOnly/>
                             </div>
-                })) : <div className="">Loading</div>
-            }
-            
+                    </div>
+                    <div className="field">
+                        <label >Current</label>
+                        <input type="text" placeholder={prev.activities} name="activities" readOnly/>
+                    </div>
+                    <div className="field">
+                        <label >Current</label>
+                        <input type="text" placeholder={prev.google_maps_link} name="google_maps_link" readOnly/>
+                    </div>
+                </div>
+        })) : <div className="">Loading</div>
+        }
             <div className="input-field">
                 <div className="field">
-                    <label htmlFor="">Name Of Place</label>
+                    <label >Name Of Place</label>
                     <input type="text" placeholder="" onChange={handleChange} name="place_name"/>
                 </div>
                 <div className="field">
-                    <label htmlFor="">Date Of Visit</label>
+                    <label >Date Of Visit</label>
                     <input type="date" placeholder="Date Visited (year/month/day)" onChange={handleChange} name="date_to_visit"/>
                 </div>
                 <div className="field number-field">
-                    <label htmlFor="">Length Of Stay (Days)</label>   
+                    <label >Length Of Stay (Days)</label>   
                         <div className="toggles">
                             <button className="add-days" onClick={addDays}>+</button>
                             <input type="number" value={trip.how_long} onChange={handleChange} name="how_long" id="how_long"/>
@@ -118,11 +123,11 @@ const UpdateTrip = (id) => {
                         </div>
                 </div>
                 <div className="field">
-                    <label htmlFor="">Activities</label>
+                    <label >Activities</label>
                     <input type="text" placeholder="" onChange={handleChange} name="activities"/>
                 </div>
                 <div className="field">
-                    <label htmlFor="">Google Maps Link</label>
+                    <label >Google Maps Link</label>
                     <input type="text" placeholder="" onChange={handleChange} name="google_maps_link"/>
                 </div>
             </div>
