@@ -2,12 +2,12 @@
     h1{
         font-size: 3rem;
         text-align: center;
+        margin: 10px;
     }
 
     .all-trips{
         display: flex;
         flex-direction: row;
-        justify-content: space-around;
         margin-bottom: 20vh;
         
     }

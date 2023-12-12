@@ -1,19 +1,23 @@
 .trip-card{
-    width: 23vw;
+    width: 13vw;
     background-color: rgb(53 121 82 / 56%);
     border-radius: 13px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    margin: 0 1rem;
 
     .card-image{
         margin: 0 auto;
         width: 90%;
-        padding-top: 2vh;
+        padding-top: 1vh;
         display: flex;
     }
+    .card-title{
+        margin-left: 20px;
+    }
     .card-details{
-        font-size: 20px;
+        font-size: 12px;
         display: flex;
-        justify-content: space-around;
+        margin-left: 20px;
     }
     .card-headings{
         font-weight: bold;
@@ -23,12 +27,13 @@
         text-align: center;
     }
     .update-button, .delete-button{
-        font-size: 1.2rem;
+        font-size: 1rem;
         background-color: #139d13;
         color: white;
         border-radius: 50px;
         text-decoration: none;
-        padding: 0.5vh .6vw;
+        padding: 0.3vh .4vw;
+        margin:0 10px;
         a{
             text-decoration: none;
             color: white;

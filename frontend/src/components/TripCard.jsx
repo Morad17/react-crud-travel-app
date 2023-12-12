@@ -15,7 +15,9 @@ const TripCard = (
       console.log(err);
     }
   }
- 
+  const justDate = date_to_visit.slice(0,10).toString().replace(/-/g, "/")
+
+
   return (
     <div className="trip-card" key={key}>
         <div className="card-block-image">
@@ -31,7 +33,7 @@ const TripCard = (
                 <p className="card-location-heading">Location</p>
             </span>
             <span>
-                <p className="card-date">{date_to_visit}</p>
+                <p className="card-date">{justDate}</p>
                 <p className="card-duration">{how_long}</p>
                 <p className="card-activities">{activities}</p>
                 <p className="card-location">{google_maps_link}</p>
