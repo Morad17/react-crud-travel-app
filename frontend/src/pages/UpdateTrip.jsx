@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { renderToString} from 'react-dom/server'
 import React, {useState} from 'react'
 import { useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -65,20 +64,13 @@ const UpdateTrip = (id) => {
         prevTrip()
     }, [])
 
-    const date = () => { 
-        prevTripData.map((p, key)=>{
-            const visitDate = p.date_to_visit.slice(0,10).toString().replace(/-/g, '/')
-            document.getElementById("current-trip-date").value = visitDate
-        })
-    }
   return (
     <div className="trip-update-card">
         <h1>Update My Trip</h1>
         <div className="update-form">
         {prevTripData? (prevTripData.map((prev, key)=>{
             const visitDate = prev.date_to_visit.slice(0,10).toString().replace(/-/g, '/')
-
-        return <div className="current-trip-details" key={key}>
+            return <div className="current-trip-details" key={key}>
                     <div className="field">
                         <label >Current</label>
                         <input type="text" placeholder={prev.place_name} name="place_name" readOnly/>
@@ -103,8 +95,8 @@ const UpdateTrip = (id) => {
                         <input type="text" placeholder={prev.google_maps_link} name="google_maps_link" readOnly/>
                     </div>
                 </div>
-        })) : <div className="">Loading</div>
-        }
+            })) : <div className="">Loading</div>
+         }
             <div className="input-field">
                 <div className="field">
                     <label >Name Of Place</label>

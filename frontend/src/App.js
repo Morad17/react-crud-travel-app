@@ -1,6 +1,6 @@
 import {Outlet, createBrowserRouter, RouterProvider} from 'react-router-dom'
 
-import './App.css';
+
 import Home from './pages/Home'
 import Navbar from './components/Navbar'
 import Register from './pages/Register'
