@@ -1,10 +1,14 @@
 import React, {Suspense, useEffect, useState} from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+
+import InteractiveMap from '../components/InteractiveMap'
+
 import { Canvas } from '@react-three/fiber'
 import { Earth } from '../components/earth'
 
 import TripCard from '../components/TripCard'
+
 
 
 
@@ -44,14 +48,14 @@ const Home = () => {
       </button>
       </div> */}
       
-      <div className="canvas-container">
+      {/* <div className="canvas-container">
         <Canvas>
           <Suspense fallback={null}>
             <Earth />
           </Suspense>
         </Canvas>
-      </div>
-
+      </div> */}
+      <InteractiveMap />
     </div>
   )
 }
