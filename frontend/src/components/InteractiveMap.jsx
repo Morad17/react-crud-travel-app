@@ -11,12 +11,24 @@ const InteractiveMap = () => {
 
     const markers = [
         {
-            geocode: [48.85, 2.35],
-            popUp: "Popup 1"
+            geocode: [-8.40488, 115.23594],
+            popUp: "Indonesia"
         },
         {
-            geocode: [48.865, 2.315],
-            popUp: "Popup 2"
+            geocode: [3.15221, 101.68595],
+            popUp: "Kuala Lumpur"
+        },
+        {
+            geocode: [1.29670, 103.79790],
+            popUp: "Singapore"
+        },
+        {
+            geocode: [37.56040, 127.02013],
+            popUp: "South Korea"
+        },
+        {
+            geocode: [35.68, 139.77],
+            popUp: "Japan"
         }
     ]
 
@@ -24,7 +36,7 @@ const InteractiveMap = () => {
 
     const customIcon = new Icon({
         iconUrl: require("../assets/images/pin-red.png"),
-        iconSize: [40, 40] //size in px
+        iconSize: [35, 35] //size in px
     })
 
     console.log(process.env.REACT_APP_JAWG_ACCESS_TOKEN);
@@ -32,8 +44,8 @@ const InteractiveMap = () => {
   return (
     <div className="interactive-map">
         <MapContainer 
-            center={ [ 48.85, 2.3]}
-            zoom={ 13 }
+            center={ [ 14.59, 120.98]}
+            zoom={ 3.5 }
             scrollWheelZoom={false} 
         >
         <TileLayer

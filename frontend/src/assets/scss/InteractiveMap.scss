@@ -1,8 +1,10 @@
 .interactive-map{
-    width: 90%;
-    height: 80%;
+
+    display: flex;
+    justify-content: center;
 }
 
 .leaflet-container{
-    height: 100vh;
+    height: 60vh;
+    width: 100vw;
 }
