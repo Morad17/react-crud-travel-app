@@ -5,6 +5,8 @@ import MarkerClusterGroup from 'react-leaflet-cluster'
 
 import 'leaflet/dist/leaflet.css'
 
+
+
 const InteractiveMap = () => {
 
     const markers = [
@@ -25,6 +27,8 @@ const InteractiveMap = () => {
         iconSize: [40, 40] //size in px
     })
 
+    console.log(process.env.REACT_APP_JAWG_ACCESS_TOKEN);
+
   return (
     <div className="interactive-map">
         <MapContainer 
@@ -32,10 +36,9 @@ const InteractiveMap = () => {
             zoom={ 13 }
             scrollWheelZoom={false} 
         >
-         <TileLayer 
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
+        <TileLayer
+            attribution='<a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url={`https://{s}.tile.jawg.io/jawg-matrix/{z}/{x}/{y}{r}.png?access-token=${process.env.REACT_APP_JAWG_ACCESS_TOKEN}`}/>
             {
             markers.map((marker, key)=> {
                 return <Marker position={marker.geocode} icon={customIcon}><h3>{marker.popUp}</h3></Marker>
