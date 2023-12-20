@@ -1,5 +1,5 @@
 import React from 'react'
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet'
 import { Icon } from 'leaflet'
 import MarkerClusterGroup from 'react-leaflet-cluster'
 
@@ -31,6 +31,13 @@ const InteractiveMap = () => {
             popUp: "Japan"
         }
     ]
+    const polyLines = [
+        [-8.40488, 115.23594],
+        [3.15221, 101.68595],
+        [1.29670, 103.79790],
+        [37.56040, 127.02013],
+        [35.68, 139.77]
+    ]
 
     //Icon
 
@@ -54,10 +61,9 @@ const InteractiveMap = () => {
             {
             markers.map((marker, key)=> {
                 return <Marker position={marker.geocode} icon={customIcon}><h3>{marker.popUp}</h3></Marker>
-            })
-        }
-        
-        
+            })}
+            <Polyline positions={polyLines} dashArray={4} weight={2} opacity={0.8} color="#408b59"/>
+         
         </MapContainer>
     </div>
   )
