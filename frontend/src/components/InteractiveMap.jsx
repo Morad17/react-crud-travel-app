@@ -46,8 +46,6 @@ const InteractiveMap = () => {
         iconSize: [35, 35] //size in px
     })
 
-    console.log(process.env.REACT_APP_JAWG_ACCESS_TOKEN);
-
   return (
     <div className="interactive-map">
         <MapContainer 

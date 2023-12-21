@@ -29,8 +29,15 @@ const Home = () => {
   
   return (
     <div className="home">
-      <h1>All Trips</h1>
+      <div className="trip-heading">
+       <h1>All Trips</h1> 
+      </div>
       <InteractiveMap />
+      {
+        trips.map((trip, key)=> {
+          <TripCard trip={trip} key={key} />
+        })
+      }
     </div>
   )
 }
