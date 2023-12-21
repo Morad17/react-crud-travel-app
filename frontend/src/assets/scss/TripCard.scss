@@ -1,9 +1,9 @@
 .trip-card{
-    width: 13vw;
+    width: 12vw;
     background-color: rgb(53 121 82 / 56%);
     border-radius: 13px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    margin: 0 1rem;
+    margin: 10px 1rem;
 
     .card-image{
         margin: 0 auto;
@@ -25,6 +25,7 @@
     .card-buttons{
         margin: 1vh 0;
         text-align: center;
+        display: none;
     }
     .update-button, .delete-button{
         font-size: 1rem;

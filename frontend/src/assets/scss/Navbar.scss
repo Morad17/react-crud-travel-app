@@ -1,0 +1,24 @@
+
+.main-nav{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: .5vh 4vw;
+  }
+  .right-nav{
+    display: flex;
+  }
+  
+  .link a{
+    text-decoration: none;
+    font-weight: bold;
+    color: black;
+  }
+  
+  
+  
+  .trip-heading h1{
+    font-size: 3.5rem;
+    text-align: center;
+    margin: 0;
+}

@@ -9,6 +9,9 @@ const Navbar = () => {
           Travel App Guide
         </h2>
       </div>
+      <div className="trip-heading middle-nav">
+       <h1>All Trips</h1> 
+      </div>
       <div className="right-nav">
         <ul className="link">
         <Link to="/">Home</Link>

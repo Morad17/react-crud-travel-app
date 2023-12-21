@@ -9,11 +9,6 @@ body{
 
 
 .home{
-    h1{
-        font-size: 3rem;
-        text-align: center;
-        margin: 10px;
-    }
 
     .all-trips{
         display: flex;
@@ -40,21 +35,11 @@ body{
     }
 }
 
-.main-nav{
+
+.trip-cards{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    margin: 1vh 4vw;
-  }
-  .right-nav{
-    display: flex;
-  }
-  
-  .link a{
-    text-decoration: none;
-    font-weight: bold;
-    color: black;
-  }
+}
   
   
   /*------ Footer ------*/

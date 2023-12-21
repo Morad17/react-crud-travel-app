@@ -19,6 +19,7 @@ const Home = () => {
       try {
         const res = await axios.get("http://localhost:8000/trips")
         setTrips(res.data)
+        
       } catch(err) {
         console.log(err);
       }
@@ -26,18 +27,17 @@ const Home = () => {
       getAllTrips()
   }, [])
   
-  
   return (
     <div className="home">
-      <div className="trip-heading">
-       <h1>All Trips</h1> 
-      </div>
       <InteractiveMap />
-      {
-        trips.map((trip, key)=> {
-          <TripCard trip={trip} key={key} />
-        })
-      }
+      <div className="trip-cards">
+        {
+          trips.map((trip, key)=> {
+            return <TripCard trip={trip} key={key} />
+          })
+       }
+      </div>
+
     </div>
   )
 }
