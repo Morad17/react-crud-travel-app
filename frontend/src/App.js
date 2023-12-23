@@ -7,6 +7,8 @@ import Register from './pages/Register'
 import Login from './pages/Login'
 import AddTrip from './pages/AddTrip';
 import UpdateTrip from './pages/UpdateTrip';
+import DetailsMap from './components/DetailsMap'
+import Country from './pages/Country'
 
 function App() {
 
@@ -26,7 +28,7 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [{
       path:"/",
-      element: <Home />,
+      element: <Country />,
 
     },
     {
