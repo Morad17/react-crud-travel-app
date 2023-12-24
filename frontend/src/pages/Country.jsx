@@ -5,6 +5,7 @@ import Stock from '../assets/images/stock-country-slide.JPG'
 import Activities from '../assets/images/icons/activities.png'
 import Date from '../assets/images/icons/date.png'
 import Days from '../assets/images/icons/days.png'
+import CountryImgSlider from '../components/CountryImgSlider'
 
 const Country = ({}) => {
   return (
@@ -24,7 +25,7 @@ const Country = ({}) => {
         <div className="country-section">
           <div className="slideshow-and-navigation">
             <div className="slideshow">
-              <img src={Stock} alt="slidehow" />
+              <CountryImgSlider />
             </div>
             <div className="navigation">
 

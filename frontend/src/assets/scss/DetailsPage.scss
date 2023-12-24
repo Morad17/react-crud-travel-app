@@ -43,3 +43,38 @@
     }
 
 }
+
+.country-image-slider{
+    overflow: hidden;
+    width: 750px;
+    height: 562px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .slider-inner{
+        transition: transform 0.3s;
+        display: flex;
+        flex-direction: row;
+    }
+    .slider-buttons{
+        position: absolute;
+        button img{
+            width: 51px;
+            color: #fafafa;
+
+        }
+        button{
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+        }
+        .btn-right{
+            transform: translateX(630px);
+        }
+
+    }
+    .slide-photo{
+        
+        width: 750px !important;
+    }
+}
