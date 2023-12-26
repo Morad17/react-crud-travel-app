@@ -42,7 +42,6 @@ const Country = ({}) => {
             </div>
           </div>
         </div>
-        
     </div>
   )
 }

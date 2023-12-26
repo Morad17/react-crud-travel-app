@@ -3,11 +3,14 @@ import mysql from "mysql"
 import dotenv from "dotenv"
 import cors from 'cors'
 
+import { google } from 'googleapis'
+import fs from "fs"
+
 dotenv.config()
 
 const app = express()
 
-const db = mysql.createConnection({
+const mdb = mysql.createConnection({
     host: process.env.MYSQL_HOST,
     user: process.env.MYSQL_USERNAME,
     password: process.env.MYSQL_PASSWORD,
@@ -20,7 +23,7 @@ app.use(cors())
 // Get All Queries //
 app.get("/trips", (req,res) => {
     const q = 'SELECT * FROM holidaytrips'
-    db.query(q,(err,data) => {
+    mdb.query(q,(err,data) => {
         if(err) return res.json(err)
         return res.json(data)
     })
@@ -35,7 +38,7 @@ app.post("/new-trip",(req,res) => {
         req.body.how_long,
         req.body.activities, 
         req.body.google_maps_link]
-    db.query(q, [val],(err,data) => {
+    mdb.query(q, [val],(err,data) => {
         if(err) return res.json(err)
         return res.json("success")
     })
@@ -43,10 +46,10 @@ app.post("/new-trip",(req,res) => {
 
 // Delete Trip
 app.delete("/trips/:id", (req,res)=> {
-    const tripId = req.params.id
+    const tripId = req.params.iddb
     const q = "DELETE FROM holidaytrips WHERE id = ?"
 
-    db.query(q, [tripId], (err,data)=>{
+    mdb.query(q, [tripId], (err,data)=>{
         if (err) return res.send(err)
         return res.json(data)
     })
@@ -58,7 +61,7 @@ app.get("/trips/:id", (req,res) => {
     const tripId = req.params.id
     const q = 'SELECT * from holidaytrips WHERE id = ?'
 
-    db.query(q, [tripId],(err, data) => {
+    mdb.query(q, [tripId],(err, data) => {
         if (err) return res.send(err)
         return res.json(data)
     })
@@ -75,12 +78,51 @@ app.put("/trips/:id", (req,res)=> {
         req.body.activities, 
         req.body.google_maps_link]
 
-    db.query(q, [...values,tripId], (err,data)=>{
+    mdb.query(q, [...values,tripId], (err,data)=>{
         if (err) return res.send(err)
         return res.json(data)
     })
 })
 
-app.listen(8000, () => {
-    console.log("connected to backend");
+//Port for Mysql
+app.listen(process.env.MYSQL_PORT, () => {
+    console.log(`connected to port ${process.env.MYSQL_PORT}`);
+})
+
+//---------------------------Google Drive
+
+const oauth2Client = new google.auth.OAuth2(
+    process.env.CLIENT_ID,
+    process.env.CLIENT_SECRET,
+    process.env.REDIRECT_URI
+)
+// check if creds are present in a text file
+try{
+    const creds = fs.readFileSync("creds.json")
+    oauth2Client.setCredentials(JSON.parse(creds))
+} catch (err){
+    console.log("creds not found");
+}
+
+app.get("/auth/google", (req,res)=> {
+    const url = oauth2Client.generateAuthUrl({
+        access_type: "offline",
+        scope: ["https://www.googleapis.com/auth/userinfo.profile" ,
+         "https://www.googleapis.com/auth/drive"]
+    })
+    res.redirect(url)
+})
+
+app.get("/google/redirect", async (req,res) => {
+    const { code } = req.query
+    const { token } = await oauth2Client.getToken(code)
+    oauth2Client.setCredentials(token)
+    fs.writeFileSync("creds.json", JSON.stringify(token))
+    res.send("Success") 
+})
+
+//Port for Google Drive
+
+app.listen(8080, () => {
+    console.log(`connected to google port 8080`);
 })
