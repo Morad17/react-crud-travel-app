@@ -115,14 +115,31 @@ app.get("/auth/google", (req,res)=> {
 
 app.get("/google/redirect", async (req,res) => {
     const { code } = req.query
-    const { token } = await oauth2Client.getToken(code)
-    oauth2Client.setCredentials(token)
-    fs.writeFileSync("creds.json", JSON.stringify(token))
+    const { tokens } = await oauth2Client.getToken(code)
+    oauth2Client.setCredentials(tokens)
+    fs.writeFileSync("creds.json", JSON.stringify(tokens))
     res.send("Success") 
+})
+
+app.get('/saveText/:sometext', (req,res) => {
+    const drive = google.drive({version:'v3', auth: oauth2Client })
+    const sometext = req.params.sometext
+
+    drive.files.create({
+        requestBody: {
+            name: 'test.text',
+            mimeType: "text/plain"
+        },
+        media: {
+            mimeType: "text/plain",
+            body: sometext,
+        }
+    })
+    return "Success"
 })
 
 //Port for Google Drive
 
 app.listen(8080, () => {
     console.log(`connected to google port 8080`);
-})
+}) 
