@@ -6,6 +6,8 @@ import cors from 'cors'
 import { google } from 'googleapis'
 import fs from "fs"
 
+
+
 dotenv.config()
 
 const app = express()
@@ -136,6 +138,23 @@ app.get('/saveText/:sometext', (req,res) => {
         }
     })
     return "Success"
+})
+
+app.get('/uploadPicture', async (req,res) => {
+    const drive = google.drive({version:'v3', auth: oauth2Client })
+
+    drive.files.create({
+        requestBody: {
+            name: 'stock.JPG',
+            mimeType: "image/JPG"
+        },
+        media: {
+            mimeType: "image/JPG",
+            body: fs.createReadStream("stock.JPG"),
+        }
+    })
+    return "Successfull upload"
+    
 })
 
 //Port for Google Drive
