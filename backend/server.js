@@ -150,8 +150,9 @@ app.get('/uploadPicture', async (req,res) => {
         },
         media: {
             mimeType: "image/JPG",
-            body: fs.createReadStream("stock.JPG"),
-        }
+            body: fs.createReadStream("stock.JPG"), 
+        },
+
     })
     return "Successfull upload"
     
