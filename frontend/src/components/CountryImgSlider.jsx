@@ -31,7 +31,7 @@ const CountryImgSlider = () => {
             style={{ transform: `translate(-${activeIndex * 100}%)`}}>
             {
                 ImageArray.map(
-                    (i)=> {return <img className="slide-photo" src={i.image} alt="country" /> })
+                    (i, key)=> {return <img className="slide-photo" key={key} src={i.image} alt="country" /> })
             }
         </div>
         <div className="slider-buttons">

@@ -58,7 +58,7 @@ const DetailsMap = () => {
             url={`https://{s}.tile.jawg.io/jawg-matrix/{z}/{x}/{y}{r}.png?access-token=${process.env.REACT_APP_JAWG_ACCESS_TOKEN}`}/>
             {
             markers.map((marker, key)=> {
-                return <Marker position={marker.geocode} icon={customIcon}><h3>{marker.popUp}</h3></Marker>
+                return <Marker key={key} position={marker.geocode} icon={customIcon}><h3>{marker.popUp}</h3></Marker>
             })}
             <Polyline positions={polyLines} dashArray={4} weight={2} opacity={0.8} color="#408b59"/>
          

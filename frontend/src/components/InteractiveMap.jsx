@@ -8,7 +8,7 @@ import 'leaflet/dist/leaflet.css'
 
 
 const InteractiveMap = () => {
-
+    
     const markers = [
         {
             geocode: [-8.40488, 115.23594],
@@ -47,6 +47,7 @@ const InteractiveMap = () => {
     })
 
   return (
+    
     <div className="interactive-map">
         <MapContainer 
             center={ [ 14.59, 120.98]}
@@ -55,7 +56,9 @@ const InteractiveMap = () => {
         >
         <TileLayer
             attribution='<a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url={`https://{s}.tile.jawg.io/jawg-matrix/{z}/{x}/{y}{r}.png?access-token=${process.env.REACT_APP_JAWG_ACCESS_TOKEN}`}/>
+            url={`https://{s}.tile.jawg.io/jawg-matrix/{z}/{x}/{y}{r}.png?access-token=${process.env.REACT_APP_JAWG_ACCESS_TOKEN}`}
+        />
+            
             {
             markers.map((marker, key)=> {
                 return <Marker position={marker.geocode} icon={customIcon}><h3>{marker.popUp}</h3></Marker>
@@ -63,6 +66,7 @@ const InteractiveMap = () => {
             <Polyline positions={polyLines} dashArray={4} weight={2} opacity={0.8} color="#408b59"/>
          
         </MapContainer>
+        {console.log("test")}
     </div>
   )
 }
