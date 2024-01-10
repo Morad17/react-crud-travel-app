@@ -34,7 +34,7 @@ const AddTrip = () => {
         e.preventDefault()
         try{
             
-            await axios.post("http://localhost:8000/new-trip",trip)
+            await axios.post("http://localhost:8000/new-trip",trip) 
             console.log(trip+"sent");
             navigate("/")
             
