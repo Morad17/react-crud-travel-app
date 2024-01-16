@@ -7,6 +7,8 @@ import multer from "multer";
 import { google } from 'googleapis'
 import fs from "fs"
 
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3"
+import { log } from "console";
 
 
 dotenv.config()
@@ -34,7 +36,7 @@ app.get("/trips", (req,res) => {
 
 // Add new trip //
 app.post("/new-trip",(req,res) => {
-    const q = "INSERT INTO holidaytrips (`place_name`,`date_to_visit`,`how_long`,`activities`,`google_maps_link`) VALUES (?)"
+    const q = "INSERT INTO holidaytrips (`place_name`,`date_to_visit`,`how_long`,`activities`,`google_maps_link`) VALUES (?)" 
     const val = [
         req.body.place_name,
         req.body.date_to_visit,
@@ -92,3 +94,36 @@ app.listen(process.env.MYSQL_PORT, () => {
     console.log(`connected to port ${process.env.MYSQL_PORT}`); 
 })
 
+//--------AWS S3 Bucket
+
+const storage = multer.memoryStorage()
+const upload = multer({ storage: storage})
+
+app.post('/admin/posts', upload.single('images'), async (req,res) => {
+    console.log("body", req.body)
+    console.log("file", req.file)
+    req.file.buffer
+
+    const command = new PutObjectCommand({
+        Bucket: process.env.BUCKET_NAME,
+        Key: req.file.originalname,
+        Body: req.file.buffer,
+        ContentType: req.file.mimetype
+    })
+    await s3.send(command)
+    res.send({})
+})
+
+app.delete('/admin/posts/:id', async (req,res) => {
+    const id = req.params.id
+    res.send({})
+})
+
+
+const s3 = new S3Client({
+    credentials: {
+        accessKeyId: process.env.BUCKET_ACCESS_KEY,
+        secretAccessKey: process.env.BUCKET_SECRET_ACCESS_KEY
+    },
+    region: process.env.BUCKET_REGION_NAME
+})
