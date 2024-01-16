@@ -37,7 +37,6 @@ const Home = () => {
           })
        }
       </div>
-       {console.log("test")}
     </div>
   )
 }

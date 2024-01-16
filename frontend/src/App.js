@@ -9,6 +9,7 @@ import AddTrip from './pages/AddTrip';
 import UpdateTrip from './pages/UpdateTrip';
 import DetailsMap from './components/DetailsMap'
 import Country from './pages/Country'
+import AdminHome from './pages/admin/AdminHome'
 
 function App() {
 
@@ -28,7 +29,7 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [{
       path:"/",
-      element: <Country />,
+      element: <Home />,
 
     },
     {
