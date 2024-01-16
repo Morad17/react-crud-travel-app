@@ -3,6 +3,7 @@ import mysql from "mysql"
 import dotenv from "dotenv"
 import cors from 'cors'
 import multer from "multer";
+import crypto from 'crypto'
 
 import { google } from 'googleapis'
 import fs from "fs"
@@ -98,6 +99,7 @@ app.listen(process.env.MYSQL_PORT, () => {
 
 const storage = multer.memoryStorage()
 const upload = multer({ storage: storage})
+const randomImageName = (bytes = 32 ) => crypto.randomBytes(bytes).toString('hex')
 
 app.post('/admin/posts', upload.single('images'), async (req,res) => {
     console.log("body", req.body)
@@ -106,7 +108,7 @@ app.post('/admin/posts', upload.single('images'), async (req,res) => {
 
     const command = new PutObjectCommand({
         Bucket: process.env.BUCKET_NAME,
-        Key: req.file.originalname,
+        Key: randomImageName(),
         Body: req.file.buffer,
         ContentType: req.file.mimetype
     })
