@@ -17,7 +17,7 @@ const mdb = mysql.createConnection({
     host: process.env.MYSQL_HOST,
     user: process.env.MYSQL_USERNAME,
     password: process.env.MYSQL_PASSWORD,
-    database: process.env.MYSQL_DATABASE,
+    database: process.env.MYSQL_DATABASE,  
 })
 
 app.use(express.json())
@@ -89,78 +89,6 @@ app.put("/trips/:id", (req,res)=> {
 
 //Port for Mysql
 app.listen(process.env.MYSQL_PORT, () => {
-    console.log(`connected to port ${process.env.MYSQL_PORT}`);
+    console.log(`connected to port ${process.env.MYSQL_PORT}`); 
 })
 
-//---------------------------Google Drive
-
-const oauth2Client = new google.auth.OAuth2(
-    process.env.CLIENT_ID,
-    process.env.CLIENT_SECRET,
-    process.env.REDIRECT_URI
-)
-// check if creds are present in a text file
-try{
-    const creds = fs.readFileSync("creds.json")
-    oauth2Client.setCredentials(JSON.parse(creds))
-} catch (err){
-    console.log("creds not found");
-}
-
-app.get("/auth/google", (req,res)=> {
-    const url = oauth2Client.generateAuthUrl({
-        access_type: "offline",
-        scope: ["https://www.googleapis.com/auth/userinfo.profile" ,
-         "https://www.googleapis.com/auth/drive"]
-    })
-    res.redirect(url)
-})
-
-app.get("/google/redirect", async (req,res) => {
-    const { code } = req.query
-    const { tokens } = await oauth2Client.getToken(code)
-    oauth2Client.setCredentials(tokens)
-    fs.writeFileSync("creds.json", JSON.stringify(tokens))
-    res.send("Success") 
-})
-
-app.get('/saveText/:sometext', (req,res) => {
-    const drive = google.drive({version:'v3', auth: oauth2Client })
-    const sometext = req.params.sometext
-
-    drive.files.create({
-        requestBody: {
-            name: 'test.text',
-            mimeType: "text/plain"
-        },
-        media: {
-            mimeType: "text/plain",
-            body: sometext,
-        }
-    })
-    return "Success"
-})
-
-app.get('/uploadPicture', async (req,res) => {
-    const drive = google.drive({version:'v3', auth: oauth2Client })
-
-    drive.files.create({
-        requestBody: {
-            name: 'stock.JPG',
-            mimeType: "image/JPG"
-        },
-        media: {
-            mimeType: "image/JPG",
-            body: fs.createReadStream("stock.JPG"), 
-        },
-
-    })
-    return "Successfull upload"
-    
-})
-
-//Port for Google Drive
-
-app.listen(8080, () => {
-    console.log(`connected to google port 8080`);
-}) 

@@ -19,12 +19,13 @@ const Home = () => {
       try {
         const res = await axios.get("http://localhost:8000/trips")
         setTrips(res.data)
-        
+        console.log(res.data);
       } catch(err) {
         console.log(err);
       }
     }
       getAllTrips()
+      console.log(trips);
   }, [])
   
   return (
@@ -32,7 +33,7 @@ const Home = () => {
       <InteractiveMap />
       <div className="trip-cards">
         {
-          trips.map((trip, key)=> {
+          trips?.map((trip, key)=> {
             return <TripCard trip={trip} key={key} />
           })
        }
