@@ -104,16 +104,28 @@ const randomImageName = (bytes = 32 ) => crypto.randomBytes(bytes).toString('hex
 app.post('/admin/posts', upload.single('images'), async (req,res) => {
     console.log("body", req.body)
     console.log("file", req.file)
-    req.file.buffer
-
+    const imageName = randomImageName()
     const command = new PutObjectCommand({
         Bucket: process.env.BUCKET_NAME,
-        Key: randomImageName(),
+        Key: imageName,
         Body: req.file.buffer,
         ContentType: req.file.mimetype
     })
     await s3.send(command)
-    res.send({})
+
+    
+    const q = "INSERT INTO holidayphotos (`photo_name','caption') VALUES (?)" 
+    const val = [
+        imageName,
+        req.body.caption,    
+    ]
+   mdb.query(q, [val],(err,data) => {
+        if(err) return res.json(err)
+        console.log(res.json);
+        return res.json("success")
+    
+    })
+    res.send(post)
 })
 
 app.delete('/admin/posts/:id', async (req,res) => {
