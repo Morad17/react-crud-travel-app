@@ -35,6 +35,15 @@ app.get("/trips", (req,res) => {
     })
 })
 
+// Get All Tags //
+app.get("/tags", (req,res) => {
+    const q = 'SELECT * FROM tagss'
+    mdb.query(q, (err,data) => {
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+})
+
 // Add new trip //
 app.post("/new-trip",(req,res) => {
     const q = "INSERT INTO holidaytrips (`place_name`,`date_to_visit`,`how_long`,`activities`,`google_maps_link`) VALUES (?)" 
@@ -89,7 +98,7 @@ app.put("/trips/:id", (req,res)=> {
         return res.json(data)
     })
 })
-
+ 
 //Port for Mysql
 app.listen(process.env.MYSQL_PORT, () => {
     console.log(`connected to port ${process.env.MYSQL_PORT}`); 
@@ -111,21 +120,24 @@ app.post('/admin/posts', upload.single('images'), async (req,res) => {
         Body: req.file.buffer,
         ContentType: req.file.mimetype
     })
-    await s3.send(command)
+    await s3.send(command) 
 
     
-    const q = "INSERT INTO holidayphotos (`photo_name','caption') VALUES (?)" 
+    const q = "INSERT INTO holidayphotos (`photo_name`,`date`, `place_name`,`province`,`city`,`country`, `tags`) VALUES (?)" 
     const val = [
         imageName,
-        req.body.caption,    
+        date,
+        place_name,
+        province,
+        city,
+        country,
+        tags    
     ]
-   mdb.query(q, [val],(err,data) => {
-        if(err) return res.json(err)
-        console.log(res.json);
-        return res.json("success")
-    
+    mdb.query(q, [val],(err,data) => {
+        if(err) console.log(err)
+        else console.log(data)
+        res.send(data)  
     })
-    res.send(post)
 })
 
 app.delete('/admin/posts/:id', async (req,res) => {
