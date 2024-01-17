@@ -32,19 +32,19 @@ app.get("/trips", (req,res) => {
     mdb.query(q,(err,data) => {
         if(err) return res.json(err)
         return res.json(data)
-    })
+    }) 
 })
 
 // Get All Tags //
 app.get("/tags", (req,res) => {
-    const q = 'SELECT * FROM tagss'
+    const q = 'SELECT * FROM tags'
     mdb.query(q, (err,data) => {
-        if(err) return res.json(err)
+        if(err) return res.json(err) 
         return res.json(data)
     })
 })
 
-// Add new trip //
+// Add new trip // 
 app.post("/new-trip",(req,res) => {
     const q = "INSERT INTO holidaytrips (`place_name`,`date_to_visit`,`how_long`,`activities`,`google_maps_link`) VALUES (?)" 
     const val = [
@@ -126,12 +126,12 @@ app.post('/admin/posts', upload.single('images'), async (req,res) => {
     const q = "INSERT INTO holidayphotos (`photo_name`,`date`, `place_name`,`province`,`city`,`country`, `tags`) VALUES (?)" 
     const val = [
         imageName,
-        date,
-        place_name,
-        province,
-        city,
-        country,
-        tags    
+        req.body.date,
+        req.body.place_name,
+        req.body.province,
+        req.body.city,
+        req.body.country,
+        req.body.tags    
     ]
     mdb.query(q, [val],(err,data) => {
         if(err) console.log(err)

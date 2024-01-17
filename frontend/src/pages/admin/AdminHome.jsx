@@ -7,15 +7,15 @@ import ReactFlagsSelect from 'react-flags-select'
 const AdminHome = () => {
 
     const [file, setFile] = useState()
+    const [tags, setTags] = useState()
     const [selectedCountry, setSelectedCountry] = useState("")
-    const [tags, setTags] = useState(null)
     const [ tripData, setTripData] = useState({
         date:null,
         place_name:"",
         province:null,
         city:"",
         country:"",
-        tags: []
+        tags: null
 
     })
       
@@ -23,13 +23,14 @@ const AdminHome = () => {
         const allTags = async () => {
             try{
                 const res = await axios.get("http://localhost:8000/tags/")
-                setTags(res.data)
+                const tagArr = []
+                res.data.map(tag => tagArr.push(tag.tag_name))
+                setTags(tagArr)
             } catch(err){
                 console.log(err);
             }
         } 
         allTags()
-        console.log(tags);
     }, [])
 
     const navigate= useNavigate()
@@ -39,6 +40,13 @@ const AdminHome = () => {
 
     const submit = async e => {
         e.preventDefault()
+        const tagElements = document.getElementsByClassName("tag-checkbox")
+        const tagElementsArray = Array.from(tagElements)
+        const selectedTags = tagElementsArray.filter(tag => tag.checked === true)
+            .map(tag => tag.name)
+        setTripData(prev => ({
+            ...prev, tags: selectedTags
+        }))
 
         const formData = new FormData()
         formData.append("images", file)
@@ -48,8 +56,10 @@ const AdminHome = () => {
         formData.append("province", tripData.province)
         formData.append("city", tripData.city)
         formData.append("country", tripData.country)
+        formData.append("tags", tripData.tags)
 
         await axios.post("http://localhost:8000/admin/posts", formData, { headers:{'Content-Type': 'multipart/form-data'}})
+        console.log(formData);
         navigate("/")
     }
 
@@ -89,9 +99,9 @@ const AdminHome = () => {
                 <h3>Tags</h3>
                 {
                     tags?.map((tag, key)=> {
-                        return <div className="tag-checkbox">
+                        return <div className="tag-checkbox-list">
                             <label >{tag}</label>
-                            <input key={key} name="tag" type="checkbox" />
+                            <input key={key} className="tag-checkbox" name={tag} type="checkbox" />
                         </div>
                     })
                 }
