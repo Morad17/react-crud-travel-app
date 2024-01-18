@@ -1,0 +1,30 @@
+.admin-home{
+    
+    form{
+        background-color: rgb(159, 139, 187);
+        padding: 1vh 3vw;
+        width: 28vw;
+    }
+    display: flex;
+    justify-content: center;
+    margin-top: 10vh;
+    .field{
+        margin: 3vh;
+        display: flex;
+        flex-direction: column;
+
+        label{
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+    }
+    .tag-div{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        .tag{
+            padding: 5px;
+            font-weight: 600;
+        }
+    }
+}
