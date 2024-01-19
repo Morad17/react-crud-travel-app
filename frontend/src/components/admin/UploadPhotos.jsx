@@ -1,24 +1,25 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router'
 
-import ReactFlagsSelect from 'react-flags-select'
-import { getName } from 'country-list'
+import Select from 'react-select'
+import countryList from 'react-select-country-list'
 
 const UploadPhotos = () => {
   
     const [file, setFile] = useState()
     const [tags, setTags] = useState()
-    const [selected, setSelected] = useState("")
+    const [country, setCountry] = useState("")
     const [ tripData, setTripData] = useState({
-        date:null,
-        place_name:null,
-        province:null,
-        city:null,
-        country:null,
+        date:"",
+        place_name:"",
+        province:"",
+        city:"",
+        country:"",
         tags: "",
 
     })
+    const options = useMemo(() => countryList().getData(), [])
 
     // Get All Tags
     useEffect(()=>{
@@ -44,13 +45,13 @@ const UploadPhotos = () => {
         return console.log("error in form")
     }
     //Adding Country to form //
-    const handleCountry = () => {
-        const country = getName(selected)
-        setTripData( prev => ({
-            ...prev, country:country
-        }))
-        console.log(country, tripData.country);
-    }
+    // const handleCountry = () => {
+    //     const country = getName(selected)
+    //     setTripData( prev => ({
+    //         ...prev, country:country
+    //     }))
+    //     console.log(country, tripData.country);
+    // }
     // Adding All Selected Tags to Form //
     const handleTags = () => {
         const tagElements = document.getElementsByClassName("tag-checkbox")
@@ -61,33 +62,47 @@ const UploadPhotos = () => {
         setTripData(prev => ({
             ...prev, tags: selectedTags
         }))}
+
+    const fileSelected = e => {
+        const file = e.target.files[0]
+        setFile(file)
+    }
+
+    const countryHandler = country => {
+        setCountry(country)
+        setTripData(prev => ({
+            ...prev, country:country
+        }))
+      }
+
+//     const formCheck = (e) => {
+        
+//         // let i =  0
+//         // while (tripData[i] !== null){
+            
+//         //     if (tripData[i] === null)
+//         //         error = tripData[i]
+//         //         console.log(tripData[i])
+//         //             break
+//         //     i++
+//         // }
+//         // for (let i=0;i<tripData.length; i++) {
+//         //     if(tripData[i] == null){
+//         //         console.log(tripData[i])
+//         //         return console.log(`error in ${tripData[i]}`)
+//         //        } else return console.log(tripData[i]);
+//         //     }
+//         // tripData.map((trip,key)=>{
+//         //     if (trip !== null){ return console.log(trip);
+//         // }})
+// }
        
     const submit = async e => {
         
         e.preventDefault()
-        const formCheck = () => {
-            console.log(tripData);
-            // let i =  0
-            // while (tripData[i] !== null){
-                
-            //     if (tripData[i] === null)
-            //         error = tripData[i]
-            //         console.log(tripData[i])
-            //             break
-            //     i++
-            // }
-            for (let i=0;i<tripData.length; i++) {
-                if(tripData[i] == null){
-                    console.log(tripData[i])
-                    return false
+        // formCheck()
 
-            }
-            
-        }
-        if( formCheck.form === false) {
-            errorMessage()
-        } else {
-            handleCountry()
+            // handleCountry()
             handleTags()
             //Appending file with All form data //
             const formData = new FormData()
@@ -103,39 +118,37 @@ const UploadPhotos = () => {
             await axios.post("http://localhost:8000/admin/posts", formData, { headers:{'Content-Type': 'multipart/form-data'}})
             console.log(formData);
             navigate("/")
-        }}
+        }
 
-    const fileSelected = e => {
-        const file = e.target.files[0]
-        setFile(file)
-    }
+    
 
   return (
             <form onSubmit={submit} encType="multipart/form-data">
                 <h2>Upload Your Photo</h2>
                 <div className="field">
                     <label >Choose A Photo</label>
-                    <input onChange={fileSelected} name="images" accept="image/*" type="file" />
+                    <input required onChange={fileSelected} name="images" accept="image/*" type="file" />
                 </div>
                 <div className="field">
                     <label htmlFor="">Date</label>
-                    <input name="date"type="date" placeholder="Date Visited (year/month/day)" onChange={handleChange} />
+                    <input required name="date"type="date" placeholder="Date Visited (year/month/day)" onChange={handleChange} />
                 </div>
                 <div className="field">
                     <label htmlFor="">Place Name</label>
-                    <input name="place_name" onChange={handleChange} type="text" />
+                    <input required name="place_name" onChange={handleChange} type="text" />
                 </div>
                 <div className="field">
                     <label htmlFor="">Country</label>
-                    <ReactFlagsSelect required selected={selected} onSelect={(code) => setSelected(code)} />
+                    {/* <ReactFlagsSelect required selected={selected} onSelect={(code) => setSelected(code)} /> */}
+                    <Select required options={options} value={country} onChange={countryHandler} />
                 </div>
                 <div className="field">
                     <label htmlFor="">Province</label>
-                    <input name="province" onChange={handleChange} type="text" />
+                    <input required name="province" onChange={handleChange} type="text" />
                 </div>
                 <div className="field">
                     <label htmlFor="">City</label>
-                    <input name="city" onChange={handleChange} type="text" />
+                    <input required name="city" onChange={handleChange} type="text" />
                 </div>
                 <div className="field tag-checkbox-list">
                     <h3>Tags</h3>
