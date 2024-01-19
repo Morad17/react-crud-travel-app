@@ -44,14 +44,7 @@ const UploadPhotos = () => {
     const errorMessage = () => {
         return console.log("error in form")
     }
-    //Adding Country to form //
-    // const handleCountry = () => {
-    //     const country = getName(selected)
-    //     setTripData( prev => ({
-    //         ...prev, country:country
-    //     }))
-    //     console.log(country, tripData.country);
-    // }
+
     // Adding All Selected Tags to Form //
     const handleTags = () => {
         const tagElements = document.getElementsByClassName("tag-checkbox")
@@ -69,40 +62,20 @@ const UploadPhotos = () => {
     }
 
     const countryHandler = country => {
+        const countryName = country.label
         setCountry(country)
         setTripData(prev => ({
-            ...prev, country:country
+            ...prev, country:countryName
         }))
+        console.log(tripData.country, countryName);
       }
 
-//     const formCheck = (e) => {
-        
-//         // let i =  0
-//         // while (tripData[i] !== null){
-            
-//         //     if (tripData[i] === null)
-//         //         error = tripData[i]
-//         //         console.log(tripData[i])
-//         //             break
-//         //     i++
-//         // }
-//         // for (let i=0;i<tripData.length; i++) {
-//         //     if(tripData[i] == null){
-//         //         console.log(tripData[i])
-//         //         return console.log(`error in ${tripData[i]}`)
-//         //        } else return console.log(tripData[i]);
-//         //     }
-//         // tripData.map((trip,key)=>{
-//         //     if (trip !== null){ return console.log(trip);
-//         // }})
-// }
+
        
     const submit = async e => {
         
         e.preventDefault()
-        // formCheck()
-
-            // handleCountry()
+        
             handleTags()
             //Appending file with All form data //
             const formData = new FormData()
@@ -139,7 +112,6 @@ const UploadPhotos = () => {
                 </div>
                 <div className="field">
                     <label htmlFor="">Country</label>
-                    {/* <ReactFlagsSelect required selected={selected} onSelect={(code) => setSelected(code)} /> */}
                     <Select required options={options} value={country} onChange={countryHandler} />
                 </div>
                 <div className="field">
