@@ -110,9 +110,8 @@ const storage = multer.memoryStorage()
 const upload = multer({ storage: storage})
 const randomImageName = (bytes = 32 ) => crypto.randomBytes(bytes).toString('hex')
 
-app.post('/admin/posts', upload.single('images'), async (req,res) => {
+app.post('/admin/photos', upload.single('images'), async (req,res) => {
     console.log("body", req.body)
-    console.log("file", req.file)
     const imageName = randomImageName()
     const command = new PutObjectCommand({
         Bucket: process.env.BUCKET_NAME,
@@ -138,6 +137,23 @@ app.post('/admin/posts', upload.single('images'), async (req,res) => {
         else console.log(data)
         res.send(data)  
     })
+})
+
+app.get('/admin/all-photos',async (req,res) => {
+
+    // const command = new GetAll({
+    //     Bucket: process.env.BUCKET_NAME,
+    // })
+    // await screen.send(command)
+
+    const q = "SELECT * FROM holidayphotos"
+    
+    mdb.query(q, (err,data) => {
+        if(err) console.log(err)
+        else console.log(data)
+        res.json(data)  
+    })
+
 })
 
 app.delete('/admin/posts/:id', async (req,res) => {

@@ -22,7 +22,7 @@ const UploadPhotos = () => {
     const options = useMemo(() => countryList().getData(), [])
 
     // Get All Tags
-    useEffect(()=>{
+    useEffect(()=> {
         const allTags = async () => {
             try{
                 const res = await axios.get("http://localhost:8000/tags/")
@@ -88,7 +88,7 @@ const UploadPhotos = () => {
             formData.append("country", tripData.country)
             formData.append("tags", tripData.tags)
 
-            await axios.post("http://localhost:8000/admin/posts", formData, { headers:{'Content-Type': 'multipart/form-data'}})
+            await axios.post("http://localhost:8000/admin/photos", formData, { headers:{'Content-Type': 'multipart/form-data'}})
             console.log(formData);
             navigate("/")
         }
@@ -129,7 +129,7 @@ const UploadPhotos = () => {
                         tags?.map((tag, key)=> {
                             return <div key={key} className="tag">
                                 <label >{tag}</label>
-                                <input   className="tag-checkbox" name={tag} type="checkbox" />
+                                <input className="tag-checkbox" name={tag} type="checkbox" />
                             </div>
                         })
                     }
