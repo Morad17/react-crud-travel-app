@@ -23,107 +23,107 @@ const GetAllPhotos = () => {
     //Get All Photo Details //
     const fetchAllPhotos =  async () => {
         try{
+            // Get All Data  //
             const res = await axios.get('http://localhost:8000/admin/all-photos')
-            setPhotosInfo(res.data)
+            const data = res.data
+            setPhotosInfo(data)
+            // Extract All Unique Countries //
+            const nData = data.map((photo,key)=>{ return photo.country} )
+            const uniqueCountries = []
+            nData.filter((val)=> val && val.includes('null') === false )
+                .forEach(c => { if(!uniqueCountries.includes(c)){
+                uniqueCountries.push(c)}})
+                setAllCountries(uniqueCountries)
+                console.log(uniqueCountries);
         } catch(err) {
             console.log(err);
         }
         }
-
     //Get All Photo Countries //
-    const getAllCountries = () => {
-        const data = photosInfo.map((photo,key)=>{ return photo.country} )
-        const uniqueCountries = []
-        data.filter((val)=> val && val.includes('null') === false )
-            .forEach(c => { if(!uniqueCountries.includes(c)){
-            uniqueCountries.push(c)}})
-            setAllCountries(uniqueCountries)
-        }   
+    
     useEffect(()  => {
-        
-        
+
         fetchAllPhotos()
-        getAllCountries()   
+        
     }, [])
  
-    //Holds users selected Country info // 
+    //Holds users selected Country info & Updates related Provinces // 
     const selectCountry = (e) => {
+        // Reset All Cities if changed Country
+        setAllCities()
+        setAllPhotos()
         setSelectedInfo(prev => ({...prev, [e.target.name]: e.target.value}))  
-        getProvinces()
-    }
-    //Holds users selected Country info // 
-    const selectProvince = (e) => {
-        setSelectedInfo(prev => ({...prev, [e.target.name]: e.target.value}))  
-        getCities()
-    }
-    //Holds users selected Photo info // 
-    const selectPhotos = (e) => {
-        setSelectedInfo(prev => ({...prev, [e.target.name]: e.target.value}))  
-        getPhotos()
-    }
-    const getProvinces = () => { 
-        const conSelected = selectedInfo.country  
+        const conSelected = e.target.value  
         const provArr = []
         photosInfo.filter(c => { return c.country == conSelected})
             .forEach( c=> {if(!provArr.includes(c.province)){  
                 provArr.push(c.province)
                 setAllProvinces(provArr)
-            }})     
+            }})   
     }
-    // Get All Seleced Provinces // 
-    const getCities = () => { 
-        const provinceSelected = selectedInfo.province  
+    //Holds users selected Province info // 
+    const selectProvince = (e) => {
+        setAllPhotos()
+        setSelectedInfo(prev => ({...prev, [e.target.name]: e.target.value}))
+        const provinceSelected = e.target.value 
         const cityArr = []
-        photosInfo.filter(p => { return p.country == provinceSelected})
+        photosInfo.filter(p => { return p.province == provinceSelected})
             .forEach( p=> {if(!cityArr.includes(p.city)){ 
                 cityArr.push(p.city) 
                 setAllCities(cityArr) 
-            }})  
-                  
+            }})   
     }
-    // Get All Selected Photo(s) //
-    const getPhotos = () => {
-        const citySelected = selectedInfo.city
+    //Holds users selected Photo info // 
+    const selectPhotos = (e) => {
+        setSelectedInfo(prev => ({...prev, [e.target.name]: e.target.value}))  
+        const citySelected = e.target.value
         const photoArr = photosInfo.filter(p => {return p.city == citySelected})
-        
-        setAllPhotos(photoArr)
+        setAllPhotos(photoArr) 
     }
-
   return (
     <div className="">
         <div className="all-files"> 
-            <div className="all-countries">
+            <div className="all-countries">  
+                <img className="folder-img"src={folder} alt="folder" />
                 <h2>All Countries</h2>
-                <img src={folder} alt="folder" />
                 <div className="country-list">     
                     {allCountries?.map((country, key) => {
-                        return <button name="country" value={country} onClick={selectCountry} className="file-btn country" key={key}>{country}</button>
+                    return <button name="country" value={country} onClick={selectCountry} 
+                                className="file-btn country" key={key}>{country}
+                            </button>
                     })}
                 </div>   
                 
             </div> 
-            <div className="all-provinces">   
-                {
-                    allProvinces?.map((prov, key) => {
-                        return <button name="province" value={prov} onClick={selectProvince} className="file-btn province" key={key}>{prov}</button>
-                    })
-                }
+            <div className="all-provinces"> 
+                <img className="folder-img"src={folder} alt="folder" />
+                <h2>All Provinces</h2>
+                <div className="all-provinces">
+                    {allProvinces?.map((prov, key) => {
+                        return <button name="province" value={prov} onClick={selectProvince} 
+                                    className="file-btn province" key={key}>{prov}
+                                </button>
+                    })}
+                </div>
+                
             </div>
             <div className="all-cities"> 
-            {
-                    allCities?.map((city, key)=> {
-                        return <button name="city" value={city} onClick={selectPhotos} className="file-btn city" key={key}>{city}</button>
-                    })
-                }
+                <img className="folder-img"src={folder} alt="folder" />
+                <h2>All Cities</h2>
+                <div className="all-cities">
+                    { allCities?.map((city, key)=> {
+                        return <button name="city" value={city} onClick={selectPhotos} 
+                                    className="file-btn city" key={key}>{city}
+                                </button>
+                    })}
+                </div>
             </div>
             <div className="all-photos">
-                {
-                    allPhotos?.map((p,key)=> {
+                
+                    {allPhotos?.map((p,key)=> {
                        return <p>{p.place_name}</p> 
-                    })
-                }
+                    })}
             </div>
-
         </div>
     </div>
   )
