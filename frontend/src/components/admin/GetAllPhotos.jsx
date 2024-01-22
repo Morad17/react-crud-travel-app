@@ -39,8 +39,7 @@ const GetAllPhotos = () => {
             console.log(err);
         }
         }
-    //Get All Photo Countries //
-    
+        
     useEffect(()  => {
 
         fetchAllPhotos()
@@ -49,13 +48,12 @@ const GetAllPhotos = () => {
  
     //Holds users selected Country info & Updates related Provinces // 
     const selectCountry = (e) => {
-        // Reset All Cities if changed Country
+        // Reset All Cities & Photos if changed Country
         setAllCities()
         setAllPhotos()
-        setSelectedInfo(prev => ({...prev, [e.target.name]: e.target.value}))  
         const conSelected = e.target.value  
         const provArr = []
-        photosInfo.filter(c => { return c.country == conSelected})
+        photosInfo.filter(c => { return c.country === conSelected})
             .forEach( c=> {if(!provArr.includes(c.province)){  
                 provArr.push(c.province)
                 setAllProvinces(provArr)
@@ -63,11 +61,11 @@ const GetAllPhotos = () => {
     }
     //Holds users selected Province info // 
     const selectProvince = (e) => {
+        //Reset All Photos if changed Province //
         setAllPhotos()
-        setSelectedInfo(prev => ({...prev, [e.target.name]: e.target.value}))
         const provinceSelected = e.target.value 
         const cityArr = []
-        photosInfo.filter(p => { return p.province == provinceSelected})
+        photosInfo.filter(p => { return p.province === provinceSelected})
             .forEach( p=> {if(!cityArr.includes(p.city)){ 
                 cityArr.push(p.city) 
                 setAllCities(cityArr) 
@@ -77,7 +75,7 @@ const GetAllPhotos = () => {
     const selectPhotos = (e) => {
         setSelectedInfo(prev => ({...prev, [e.target.name]: e.target.value}))  
         const citySelected = e.target.value
-        const photoArr = photosInfo.filter(p => {return p.city == citySelected})
+        const photoArr = photosInfo.filter(p => {return p.city === citySelected})
         setAllPhotos(photoArr) 
     }
   return (

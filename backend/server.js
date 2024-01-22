@@ -7,9 +7,11 @@ import crypto from 'crypto'
 
 import { google } from 'googleapis'
 import fs from "fs"
-
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3"
+// AWS S3 //
+import { S3Client, PutObjectCommand ,GetObjectCommand} from "@aws-sdk/client-s3"
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { log } from "console";
+
 
 
 dotenv.config()
@@ -141,18 +143,37 @@ app.post('/admin/photos', upload.single('images'), async (req,res) => {
 
 app.get('/admin/all-photos',async (req,res) => {
 
-    // const command = new GetAll({
-    //     Bucket: process.env.BUCKET_NAME,
-    // })
-    // await screen.send(command)
+    // const q = "SELECT * FROM holidayphotos"
+    // mdb.query(q, (err,data) => {
+    //         if(err) console.log(err)
+    //         else console.log(data)
+    //         res.json(data)  
+    //     })
 
-    const q = "SELECT * FROM holidayphotos"
-    
-    mdb.query(q, (err,data) => {
-        if(err) console.log(err)
-        else console.log(data)
-        res.json(data)  
+    const qu ="SELECT photo_name FROM holidayphotos"
+    const ar = []
+    const data = mdb.query(qu, (err, data) => {
+       data.forEach((data)=> {
+        return data.photo_name
+       })
     })
+
+    data.forEach((photo)=> {
+        console.log(photo);
+    })
+    // for (const photo of photos) {
+    //     const getObjectParams= {
+    //         Bucket: process.env.BUCKET_NAME,
+    //         Key: photo.photo_name
+    //     }
+    //     const command = new GetObjectCommand(getObjectParams);
+    //     const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+    //     photo.imageUrl = url 
+    //     }
+   
+    
+
+    
 
 })
 
