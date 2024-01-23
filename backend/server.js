@@ -152,29 +152,20 @@ app.get('/admin/all-photos',async (req,res) => {
 
     const qu ="SELECT photo_name FROM holidayphotos"
     const ar = []
-    const data = mdb.query(qu, (err, data) => {
-       data.forEach((data)=> {
-        return data.photo_name
-       })
+    const photo = mdb.query(qu, (err, data) => {
+        return new Promise((success, rej) => {
+            data.forEach((d)=> {
+            const getObjectParams= {
+                Bucket: process.env.BUCKET_NAME,
+                Key: d.photo_name}
+            const command = new GetObjectCommand(getObjectParams);
+            const url = getSignedUrl(s3, command, { expiresIn: 3600 });
+            console.log(url);
+                success(d.imageUrl = url)   
+       }
+       )}) 
     })
-
-    data.forEach((photo)=> {
-        console.log(photo);
-    })
-    // for (const photo of photos) {
-    //     const getObjectParams= {
-    //         Bucket: process.env.BUCKET_NAME,
-    //         Key: photo.photo_name
-    //     }
-    //     const command = new GetObjectCommand(getObjectParams);
-    //     const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
-    //     photo.imageUrl = url 
-    //     }
-   
     
-
-    
-
 })
 
 app.delete('/admin/posts/:id', async (req,res) => {
